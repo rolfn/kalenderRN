@@ -104,11 +104,18 @@
   {\expandafter\g@addto@macro\expandafter\RN@events@II\expandafter{\@tempa}}%
   \if@tempswa
     \edef\@tempa{%
-      \noexpand\ifdate{equals=#1}{\noexpand\tikzset{every day/.style={fill=red!20}}}{}
+      \noexpand\ifdate{equals=#1}{\noexpand\tikzset{%
+        every day/.style={fill=medium}}}{}
     }%
     \expandafter\g@addto@macro\expandafter\RN@backgrounds\expandafter{\@tempa}%
   \fi
 }
+
+\colorlet{dark}{green!55!black}
+\colorlet{medium}{dark!30}
+\colorlet{bright}{dark!15}
+\colorlet{period}{gray!30}
+
 \newcommand\RN@makeKalender[2]{%
   \begin{tikzpicture}[every day/.style={anchor=north}]%
     \calendar[dates=#1 to #2,name=cal,day yshift=3em,%]
@@ -123,13 +130,13 @@
           \pgftransformxshift{4.8cm}%
           % Print month name
           \draw (0,0)node [shape=rectangle,minimum height=.53cm,%
-            text width=4.4cm,fill=red,text=white,draw=red,text centered]{%
+            text width=4.4cm,fill=dark,text=white,draw=dark,text centered]{%
               \textbf{\pgfcalendarmonthname{\pgfcalendarcurrentmonth}}};}{}%
         \ifdate{workday}{%
           \tikzset{every day/.style={fill=white}}%
           \RN@periods}{}%
-        \ifdate{Saturday}{\tikzset{every day/.style={fill=red!10}}}{}%
-        \ifdate{Sunday}{\tikzset{every day/.style={fill=red!20}}}{}%
+        \ifdate{Saturday}{\tikzset{every day/.style={fill=bright}}}{}%
+        \ifdate{Sunday}{\tikzset{every day/.style={fill=medium}}}{}%
         \RN@backgrounds
       },%
       execute at begin day scope={%
