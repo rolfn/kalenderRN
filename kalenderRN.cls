@@ -2,7 +2,7 @@
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{kalenderRN}[2016/05/13 v0.1a Dokumentenklasse (RN)]
 
-% Based on: https://tex.stackexchange.com/questions/227384/tikz-calendar-in-ngerman
+% inspired by http://www.texample.net/tikz/examples/a-calender-for-doublesided-din-a4/
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions\relax
 \LoadClass[landscape,a4paper,ngerman,10pt]{article}
@@ -94,7 +94,6 @@
   }%
   \expandafter\g@addto@macro\expandafter\RN@periods\expandafter{\@tempa}%
 }
-\newcommand*\periods{}
 \newcommand*\RN@event@i[2]{%
   \protected@edef\@tempa{%
     \noexpand\@ifundefined{pgf@sh@ns@cal-#1}{}{%
