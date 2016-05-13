@@ -26,8 +26,6 @@
 
 \ifRN@XeOrLua
   \RequirePackage{fontspec}
-  \RequirePackage{unicode-math}
-  \setromanfont[Ligatures=TeX]{TeX Gyre Pagella}
   \setsansfont[Ligatures=TeX]{TeX Gyre Heros}  
 \else
   \RequirePackage[T1]{fontenc}
@@ -113,7 +111,7 @@
 }
 \newcommand\RN@makeKalender[2]{%
   \begin{tikzpicture}[every day/.style={anchor=north}]%
-    \calendar[dates=#1 to #2,name=cal,day yshift=3em,%
+    \calendar[dates=#1 to #2,name=cal,day yshift=3em,%]
       day code={%
         \node[name=\pgfcalendarsuggestedname,every day,shape=rectangle,%
           minimum height=.53cm,text width=4.4cm,draw=gray]{\tikzdaytext};%
@@ -153,7 +151,7 @@
 \AtBeginDocument{%
   \begingroup
     \let\year=\RN@year
-    \InputIfFileExists{events.tex}{}{}%
+    \InputIfFileExists{events\RN@year.tex}{}{}%
   \endgroup
 }  
 \pagestyle{fancy}
