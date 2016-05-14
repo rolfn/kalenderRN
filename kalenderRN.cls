@@ -1,6 +1,6 @@
 \setcounter{errorcontextlines}{100}
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{kalenderRN}[2016/05/13 v0.1a Dokumentenklasse (RN)]
+\ProvidesClass{kalenderRN}[2016/05/14 v0.1b Calendar class (RN)]
 
 % inspired by http://www.texample.net/tikz/examples/a-calender-for-doublesided-din-a4/
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
@@ -93,13 +93,12 @@
   \expandafter\g@addto@macro\expandafter\RN@periods\expandafter{\@tempa}%
 }
 \newcommand*\RN@event@i[2]{%
-  \protected@edef\@tempa{%
-    \noexpand\@ifundefined{pgf@sh@ns@cal-#1}{}{%
-      \noexpand\node[anchor=north west] at ($(cal-#1.north east)-(.6em,0em)$) {%
-        \noexpand\makebox[0pt][r]{%
-          \noexpand\varwidth{3.4cm}\noexpand\tiny#2\noexpand\endvarwidth}};}%
+  \protected@edef\@tempa{\noexpand\@ifundefined{pgf@sh@ns@cal-#1}{}{%
+    \noexpand\node[anchor=north west] at ($(cal-#1.north east)-(.6em,0em)$){%
+      \noexpand\makebox[0pt][r]{\noexpand\resizebox{!}{1.15ex}{%
+        \noexpand\varwidth{3.4cm}#2\noexpand\strut\noexpand\endvarwidth}}};}%
   }%
-  \pgfcalendarifdate{#1}{at most=06-last}%
+  \pgfcalendarifdate{#1}{at most=06-last}% first half-year?
   {\expandafter\g@addto@macro\expandafter\RN@events@I\expandafter{\@tempa}}%
   {\expandafter\g@addto@macro\expandafter\RN@events@II\expandafter{\@tempa}}%
   \if@tempswa
@@ -118,7 +117,7 @@
 
 \newcommand\RN@makeKalender[2]{%
   \begin{tikzpicture}[every day/.style={anchor=north}]%
-    \calendar[dates=#1 to #2,name=cal,day yshift=3em,%]
+    \calendar[dates=#1 to #2,name=cal,day text={\%d=},day yshift=3em,%]
       day code={%
         \node[name=\pgfcalendarsuggestedname,every day,shape=rectangle,%
           minimum height=.53cm,text width=4.4cm,draw=gray]{\tikzdaytext};%
