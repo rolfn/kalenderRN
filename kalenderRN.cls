@@ -26,7 +26,7 @@
 
 \ifRN@XeOrLua
   \RequirePackage{fontspec}
-  \setsansfont[Ligatures=TeX]{TeX Gyre Heros}  
+  \setsansfont[Ligatures=TeX]{TeX Gyre Heros}
 \else
   \RequirePackage[T1]{fontenc}
   \RequirePackage{textcomp}
@@ -47,7 +47,7 @@
 
 \RequirePackage[main=ngerman]{babel}
 
-\RequirePackage[ngerman]{translator}    
+\RequirePackage[ngerman]{translator}
 
 \deftranslation[to=ngerman]{January}{Januar}
 \deftranslation[to=ngerman]{February}{Februar}
@@ -69,7 +69,7 @@
 \deftranslation[to=ngerman]{Sat}{Sb}
 \deftranslation[to=ngerman]{Sun}{So}
 
-\RequirePackage{tikz}           
+\RequirePackage{tikz}
 \usetikzlibrary{calc}
 \usetikzlibrary{calendar}
 
@@ -88,7 +88,7 @@
 \newcommand*\period[2]{%
   \edef\@tempa{%
     \noexpand\ifdate{between=#1 and #2}{%
-      \noexpand\tikzset{every day/.style={fill=gray!30}}}{}%  
+      \noexpand\tikzset{every day/.style={fill=gray!30}}}{}%
   }%
   \expandafter\g@addto@macro\expandafter\RN@periods\expandafter{\@tempa}%
 }
@@ -111,9 +111,9 @@
   \fi
 }
 
-\colorlet{dark}{green!55!black}
-\colorlet{medium}{dark!30}
-\colorlet{bright}{dark!15}
+\definecolor{dark}{HTML}{A57C00}
+\colorlet{medium}{dark!35}
+\colorlet{bright}{dark!20}
 \colorlet{period}{gray!30}
 
 \newcommand\RN@makeKalender[2]{%
@@ -160,6 +160,6 @@
     \let\year=\RN@year
     \InputIfFileExists{events\RN@year.tex}{}{}%
   \endgroup
-}  
+}
 \pagestyle{fancy}
 \endinput
