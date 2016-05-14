@@ -96,7 +96,7 @@
   \protected@edef\@tempa{\noexpand\@ifundefined{pgf@sh@ns@cal-#1}{}{%
     \noexpand\node[anchor=north west] at ($(cal-#1.north east)-(.6em,0em)$){%
       \noexpand\makebox[0pt][r]{\noexpand\resizebox{!}{1.15ex}{%
-        \noexpand\varwidth{3.4cm}#2\noexpand\strut\noexpand\endvarwidth}}};}%
+        \noexpand\varwidth{4.6cm}#2\noexpand\strut\noexpand\endvarwidth}}};}%
   }%
   \pgfcalendarifdate{#1}{at most=06-last}% first half-year?
   {\expandafter\g@addto@macro\expandafter\RN@events@I\expandafter{\@tempa}}%
