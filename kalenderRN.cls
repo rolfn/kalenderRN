@@ -1,8 +1,14 @@
+%
+% Author: Rolf Niepraschk, https://github.com/rolfn/kalenderRN
+%
+% inspired by http://www.texample.net/tikz/examples/a-calender-for-doublesided-din-a4/
+% Original author: Robert Krause
+% License: Creative Commons attribution license (CC-BY-SA)
+
 \setcounter{errorcontextlines}{100}
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{kalenderRN}[2016/05/14 v0.1b Calendar class (RN)]
+\ProvidesClass{kalenderRN}[2016/05/15 v0.1b Calendar class (RN)]
 
-% inspired by http://www.texample.net/tikz/examples/a-calender-for-doublesided-din-a4/
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions\relax
 \LoadClass[landscape,a4paper,ngerman,10pt]{article}
