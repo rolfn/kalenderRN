@@ -1,8 +1,14 @@
+%
+% Author: Rolf Niepraschk, https://github.com/rolfn/kalenderRN
+%
+% inspired by http://www.texample.net/tikz/examples/a-calender-for-doublesided-din-a4/
+% Original author: Robert Krause
+% License: Creative Commons attribution license (CC-BY-SA)
+
 \setcounter{errorcontextlines}{100}
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{kalenderRN}[2016/05/13 v0.1a Dokumentenklasse (RN)]
+\ProvidesClass{kalenderRN}[2016/05/15 v0.1b Calendar class (RN)]
 
-% inspired by http://www.texample.net/tikz/examples/a-calender-for-doublesided-din-a4/
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions\relax
 \LoadClass[landscape,a4paper,ngerman,10pt]{article}
@@ -26,7 +32,7 @@
 
 \ifRN@XeOrLua
   \RequirePackage{fontspec}
-  \setsansfont[Ligatures=TeX]{TeX Gyre Heros}  
+  \setsansfont[Ligatures=TeX]{TeX Gyre Heros}
 \else
   \RequirePackage[T1]{fontenc}
   \RequirePackage{textcomp}
@@ -47,7 +53,7 @@
 
 \RequirePackage[main=ngerman]{babel}
 
-\RequirePackage[ngerman]{translator}    
+\RequirePackage[ngerman]{translator}
 
 \deftranslation[to=ngerman]{January}{Januar}
 \deftranslation[to=ngerman]{February}{Februar}
@@ -69,7 +75,7 @@
 \deftranslation[to=ngerman]{Sat}{Sb}
 \deftranslation[to=ngerman]{Sun}{So}
 
-\RequirePackage{tikz}           
+\RequirePackage{tikz}
 \usetikzlibrary{calc}
 \usetikzlibrary{calendar}
 
@@ -88,18 +94,17 @@
 \newcommand*\period[2]{%
   \edef\@tempa{%
     \noexpand\ifdate{between=#1 and #2}{%
-      \noexpand\tikzset{every day/.style={fill=gray!30}}}{}%  
+      \noexpand\tikzset{every day/.style={fill=gray!30}}}{}%
   }%
   \expandafter\g@addto@macro\expandafter\RN@periods\expandafter{\@tempa}%
 }
 \newcommand*\RN@event@i[2]{%
-  \protected@edef\@tempa{%
-    \noexpand\@ifundefined{pgf@sh@ns@cal-#1}{}{%
-      \noexpand\node[anchor=north west] at ($(cal-#1.north east)-(.6em,0em)$) {%
-        \noexpand\makebox[0pt][r]{%
-          \noexpand\varwidth{3.4cm}\noexpand\tiny#2\noexpand\endvarwidth}};}%
+  \protected@edef\@tempa{\noexpand\@ifundefined{pgf@sh@ns@cal-#1}{}{%
+    \noexpand\node[anchor=north west] at ($(cal-#1.north east)-(.6em,0em)$){%
+      \noexpand\makebox[0pt][r]{\noexpand\resizebox{!}{1.15ex}{%
+        \noexpand\varwidth{4.6cm}#2\noexpand\strut\noexpand\endvarwidth}}};}%
   }%
-  \pgfcalendarifdate{#1}{at most=06-last}%
+  \pgfcalendarifdate{#1}{at most=06-last}% first half-year?
   {\expandafter\g@addto@macro\expandafter\RN@events@I\expandafter{\@tempa}}%
   {\expandafter\g@addto@macro\expandafter\RN@events@II\expandafter{\@tempa}}%
   \if@tempswa
@@ -111,14 +116,14 @@
   \fi
 }
 
-\colorlet{dark}{green!55!black}
-\colorlet{medium}{dark!30}
-\colorlet{bright}{dark!15}
+\definecolor{dark}{HTML}{A57C00}
+\colorlet{medium}{dark!35}
+\colorlet{bright}{dark!20}
 \colorlet{period}{gray!30}
 
 \newcommand\RN@makeKalender[2]{%
   \begin{tikzpicture}[every day/.style={anchor=north}]%
-    \calendar[dates=#1 to #2,name=cal,day yshift=3em,%]
+    \calendar[dates=#1 to #2,name=cal,day text={\%d=},day yshift=3em,%]
       day code={%
         \node[name=\pgfcalendarsuggestedname,every day,shape=rectangle,%
           minimum height=.53cm,text width=4.4cm,draw=gray]{\tikzdaytext};%
@@ -160,6 +165,6 @@
     \let\year=\RN@year
     \InputIfFileExists{events\RN@year.tex}{}{}%
   \endgroup
-}  
+}
 \pagestyle{fancy}
 \endinput
