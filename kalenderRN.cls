@@ -136,7 +136,7 @@
           % Print month name
           \draw (0,0)node [shape=rectangle,minimum height=.53cm,%
             text width=4.4cm,fill=dark,text=white,draw=dark,text centered]{%
-              \textbf{\pgfcalendarmonthname{\pgfcalendarcurrentmonth}}};}{}%
+              \resizebox{!}{.225cm}{\textbf{\pgfcalendarmonthname{\pgfcalendarcurrentmonth}}}};}{}%
         \ifdate{workday}{%
           \tikzset{every day/.style={fill=white}}%
           \RN@periods}{}%
