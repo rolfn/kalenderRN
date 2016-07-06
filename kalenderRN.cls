@@ -94,7 +94,7 @@
 \newcommand*\period[2]{%
   \edef\@tempa{%
     \noexpand\ifdate{between=#1 and #2}{%
-      \noexpand\tikzset{every day/.style={fill=gray!30}}}{}%
+      \noexpand\tikzset{every day/.style={fill=period}}}{}%
   }%
   \expandafter\g@addto@macro\expandafter\RN@periods\expandafter{\@tempa}%
 }
