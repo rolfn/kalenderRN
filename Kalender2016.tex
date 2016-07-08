@@ -1,8 +1,18 @@
 \listfiles
-\documentclass[draft]{kalenderRN}
-
-%\renewcommand*\year{2018}
+\documentclass[svgnames]{kalenderRN}
 
 \begin{document}
-  \makeKalender[TermineXXX]
+  \makeKalender[%
+    year=2016,            % default: current year
+    title=Termine,
+    showweeknumbers,      % default: false
+    titleColor=dark,      % default: dark 
+    eventColor=medium,    % default: medium 
+    workdayColor=none,    % default: none 
+    saturdayColor=bright, % default: bright 
+    sundayColor=medium,   % default: medium
+    monthColor=white,     % default: white  
+    monthBGcolor=dark     % default: dark  
+  ]
 \end{document} 
+

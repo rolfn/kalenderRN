@@ -7,9 +7,9 @@
 
 \setcounter{errorcontextlines}{100}
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{kalenderRN}[2016/05/15 v0.1b Calendar class (RN)]
+\ProvidesClass{kalenderRN}[2016/07/08 v0.2a Calendar class (RN)]
 
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
+\DeclareOption*{\PassOptionsToPackage{\CurrentOption}{xcolor}}
 \ProcessOptions\relax
 \LoadClass[landscape,a4paper,ngerman,10pt]{article}
 \RequirePackage[headheight=2cm,margin=.5cm,top=3.2cm,nofoot]{geometry}
@@ -17,11 +17,10 @@
 
 \renewcommand{\headrulewidth}{0.0pt}
 \setlength{\headheight}{10ex}
-\newcommand*\RN@title{}
 \chead{%
   \raisebox{-.3\height}[0pt][0pt]{\parbox[b]{\textwidth}{%
-  \fontsize{60}{70}\selectfont\textbf{\RN@year}
-  \textbf{\Huge\RN@title}\hfill
+  \fontsize{60}{70}\color{\RN@titleColor}\selectfont
+  \textbf{\RN@year}~\textbf{\Huge\RN@title}\hfill
   }}%
 }
 \cfoot{}
@@ -82,38 +81,89 @@
 \RequirePackage{varwidth}
 
 \newcommand*\RN@year{}
-\AtBeginDocument{\xdef\RN@year{\the\numexpr\year}}
+\edef\RN@year{\the\numexpr\year}
 
-\newcommand*\event{%
-  \@ifstar{\@tempswatrue\RN@event@i}{\@tempswafalse\RN@event@i}%
-}
 \newcommand*\RN@events@I{}
 \newcommand*\RN@events@II{}
 \newcommand*\RN@backgrounds{}
 \newcommand*\RN@periods{}
+\newcommand*\RN@title{}
+\newcounter{weeknumber}
+\newif\ifRN@showweeknumbers \RN@showweeknumbersfalse
+
+\pgfkeys{%
+  /CAL/.is family, /CAL,
+  showweeknumbers/.is if = RN@showweeknumbers,
+  title/.estore in = \RN@title,
+  year/.estore in = \RN@year,
+  default/.style={eventColor=medium,monthBGcolor=dark,monthColor=white,%
+    workdayColor=none,saturdayColor=bright,sundayColor=medium,titleColor=dark},
+  titleColor/.estore in = \RN@titleColor,
+  eventColor/.estore in = \RN@eventColor,
+  monthBGcolor/.estore in = \RN@monthBGcolor,
+  monthColor/.estore in = \RN@monthColor,
+  workdayColor/.estore in = \RN@workdayColor,
+  saturdayColor/.estore in = \RN@saturdayColor,
+  sundayColor/.estore in = \RN@sundayColor
+}
+\pgfkeys{%
+  /CAL/.is family, /CAL,
+  period/.cd,
+  default/.style={color=period,name={}},
+  color/.estore in = \RN@period@color, 
+  name/.estore in = \RN@period@name 
+}
+\pgfkeys{%
+  /CAL/.is family, /CAL,
+  event/.cd,
+  color/.estore in = \RN@eventColor 
+}
+
 \newcommand*\period[2]{%
+  \@ifnextchar[{\period@i{#1}{#2}}{\period@i{#1}{#2}[]}
+}
+\newcommand*\period@i{}
+\def\period@i#1#2[#3]{%
+  \pgfkeys{/CAL/period/.cd, default, #3}%
   \edef\@tempa{%
     \noexpand\ifdate{between=#1 and #2}{%
-      \noexpand\tikzset{every day/.style={fill=period}}}{}%
+      \noexpand\tikzset{every day/.style={fill=\RN@period@color}}}{}%
   }%
   \expandafter\g@addto@macro\expandafter\RN@periods\expandafter{\@tempa}%
+  \ifx\RN@period@name\@empty\else 
+    \pgfcalendar{}{#1}{#2}{%
+      \event{\pgfcalendarcurrentyear-\pgfcalendarcurrentmonth-\pgfcalendarcurrentday}%
+        {\RN@period@name}%
+    }%
+  \fi
+}
+\newcommand*\event{%
+  \@ifstar{\@tempswatrue\RN@event@i}{\@tempswafalse\RN@event@i}%
 }
 \newcommand*\RN@event@i[2]{%
-  \protected@edef\@tempa{\noexpand\@ifundefined{pgf@sh@ns@cal-#1}{}{%
-    \noexpand\node[anchor=north west] at ($(cal-#1.north east)-(.6em,0em)$){%
-      \noexpand\makebox[0pt][r]{\noexpand\resizebox{!}{1.15ex}{%
-        \noexpand\varwidth{4.6cm}#2\noexpand\strut\noexpand\endvarwidth}}};}%
-  }%
+  \@ifnextchar[{\RN@event@ii{#1}{#2}}{\RN@event@ii{#1}{#2}[]} 
+}
+\newcommand*\RN@event@ii{}%
+\def\RN@event@ii#1#2[#3]{%
+  \pgfkeys{/CAL/event/.cd, #3}%
+  \@ifundefined{event@#1}{%
+    \protected@edef\@tempa{\noexpand\@ifundefined{pgf@sh@ns@cal-#1}{}{%
+      \noexpand\node[anchor=north west] at ($(cal-#1.north east)-(.6em,0em)$){%
+        \noexpand\makebox[0pt][r]{\noexpand\resizebox{!}{1.15ex}{%
+          \noexpand\varwidth{4.6cm}#2\noexpand\strut\noexpand\endvarwidth}}};}%
+    }%
+  }{}%
+  \@namedef{event@#1}{#2}%
   \pgfcalendarifdate{#1}{at most=06-last}% first half-year?
   {\expandafter\g@addto@macro\expandafter\RN@events@I\expandafter{\@tempa}}%
   {\expandafter\g@addto@macro\expandafter\RN@events@II\expandafter{\@tempa}}%
   \if@tempswa
     \edef\@tempa{%
       \noexpand\ifdate{equals=#1}{\noexpand\tikzset{%
-        every day/.style={fill=medium}}}{}
+        every day/.style={fill=\RN@eventColor}}}{}
     }%
     \expandafter\g@addto@macro\expandafter\RN@backgrounds\expandafter{\@tempa}%
-  \fi
+  \fi 
 }
 
 \definecolor{dark}{HTML}{A57C00}
@@ -123,25 +173,30 @@
 
 \newcommand\RN@makeKalender[2]{%
   \begin{tikzpicture}[every day/.style={anchor=north}]%
-    \calendar[dates=#1 to #2,name=cal,day text={\%d=},day yshift=3em,%]
+    \calendar[dates=#1 to #2,name=cal,day text={\%d=},day yshift=3em,%]%
       day code={%
         \node[name=\pgfcalendarsuggestedname,every day,shape=rectangle,%
           minimum height=.53cm,text width=4.4cm,draw=gray]{\tikzdaytext};%
           \draw(-1.8cm,-.1ex) node[anchor=west]{\footnotesize
-            \pgfcalendarweekdayshortname{\pgfcalendarcurrentweekday}};%
+            \pgfcalendarweekdayshortname{\pgfcalendarcurrentweekday}%
+            \ifRN@showweeknumbers
+              \ifdate{Monday}{~~\stepcounter{weeknumber}\normalsize[%
+                \mbox{\footnotesize\arabic{weeknumber}}]}{}%
+            \fi
+          };%
       },%
       execute before day scope={%
         \ifdate{day of month=1}{%
           \pgftransformxshift{4.8cm}%
           % Print month name
           \draw (0,0)node [shape=rectangle,minimum height=.53cm,%
-            text width=4.4cm,fill=dark,text=white,draw=dark,text centered]{%
-              \textbf{\strut\pgfcalendarmonthname{\pgfcalendarcurrentmonth}}};}{}%
-        \ifdate{workday}{%
-          \tikzset{every day/.style={fill=white}}%
-          \RN@periods}{}%
-        \ifdate{Saturday}{\tikzset{every day/.style={fill=bright}}}{}%
-        \ifdate{Sunday}{\tikzset{every day/.style={fill=medium}}}{}%
+            text width=4.4cm,fill=\RN@monthBGcolor,draw=\RN@monthBGcolor,%
+              text=\RN@monthColor,text centered]{%
+            \textbf{\strut\pgfcalendarmonthname{\pgfcalendarcurrentmonth}}};}{}%
+        \ifdate{workday}{\tikzset{every day/.style={fill=\RN@workdayColor}}}{}% 
+        \ifdate{Saturday}{\tikzset{every day/.style={fill=\RN@saturdayColor}}}{}%
+        \ifdate{Sunday}{\tikzset{every day/.style={fill=\RN@sundayColor}}}{}%
+        \RN@periods
         \RN@backgrounds
       },%
       execute at begin day scope={%
@@ -149,22 +204,21 @@
       }%
     ];%
     \pgfcalendarifdate{#1}{at most=06-last}{\RN@events@I}{\RN@events@II}%
-  \end{tikzpicture}
+  \end{tikzpicture}%  
 }
 
 \newcommand*\makeKalender[1][]{%
-  \gdef\RN@title{#1}%
-  \center
-    \RN@makeKalender{\RN@year-01-01}{\RN@year-06-30}%
-    \pagebreak
-    \RN@makeKalender{\RN@year-07-01}{\RN@year-12-31}%
-  \endcenter
-}
-\AtBeginDocument{%
+  \pgfkeys{/CAL/.cd, default, #1}%
+  \setcounter{weeknumber}{0}%
   \begingroup
     \let\year=\RN@year
     \InputIfFileExists{events\RN@year.tex}{}{}%
   \endgroup
+  \centering
+  \RN@makeKalender{\RN@year-01-01}{\RN@year-06-30}\par
+  \newpage
+  \RN@makeKalender{\RN@year-07-01}{\RN@year-12-31}\par
 }
+
 \pagestyle{fancy}
 \endinput
