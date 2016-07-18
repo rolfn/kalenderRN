@@ -7,7 +7,7 @@
 
 \setcounter{errorcontextlines}{100}
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{kalenderRN}[2016/07/18 v0.2c Calendar class (RN)]
+\ProvidesClass{kalenderRN}[2016/07/18 v0.3a Calendar class (RN)]
 
 \newif\ifRN@print \RN@printfalse
 
@@ -15,8 +15,14 @@
 
 \DeclareOption*{\PassOptionsToPackage{\CurrentOption}{xcolor}}
 \ProcessOptions\relax
-\LoadClass[landscape,a4paper,ngerman,10pt]{article}
-\RequirePackage[margin={0mm,0mm}]{geometry}
+\LoadClass[a4paper,ngerman,10pt]{article}  
+\ifRN@print
+  \RequirePackage{graphicx}
+  \PassOptionsToPackage{portrait}{geometry}
+\else
+  \PassOptionsToPackage{landscape}{geometry}
+\fi
+\RequirePackage[a4paper,margin={0mm,0mm}]{geometry}
 
 \newif\ifRN@XeOrLua \RN@XeOrLuafalse
 \RequirePackage{ifluatex,ifxetex}
@@ -182,7 +188,7 @@
       \calendar[dates=#1 to #2,name=cal,day text={\%d=},day yshift=3em,%]%
         day code={%
           \node[name=\pgfcalendarsuggestedname,every day,shape=rectangle,%
-            minimum height=.53cm,text width=4.4cm,draw=gray]{\tikzdaytext};%
+            minimum height=.53cm,text width=4.4cm,draw=black]{\tikzdaytext};%
             \draw(-1.8cm,-.1ex) node[anchor=west]{\footnotesize
               \pgfcalendarweekdayshortname{\pgfcalendarcurrentweekday}%
               \ifRN@showweeknumbers
@@ -234,13 +240,13 @@
   \sbox{\RN@pageI}{\RN@makeKalender{\RN@year-01-01}{\RN@year-06-30}}%  
   \sbox{\RN@pageII}{\RN@makeKalender{\RN@year-07-01}{\RN@year-12-31}}%
   \ifRN@print
-    \usebox\RN@pageI
+    \rotatebox[origin=c]{90}{\usebox\RN@pageI}%
   \else
     \usebox\RN@pageI
   \fi
   \newpage
   \ifRN@print
-    \usebox\RN@pageII
+    \rotatebox[origin=c]{-90}{\usebox\RN@pageII}%
   \else
     \usebox\RN@pageII
   \fi
