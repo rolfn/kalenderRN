@@ -233,9 +233,17 @@
   \endgroup
   \sbox{\RN@pageI}{\RN@makeKalender{\RN@year-01-01}{\RN@year-06-30}}%  
   \sbox{\RN@pageII}{\RN@makeKalender{\RN@year-07-01}{\RN@year-12-31}}%
-  \ifRN@print\usebox\RN@pageI\else\usebox\RN@pageI\fi
+  \ifRN@print
+    \usebox\RN@pageI
+  \else
+    \usebox\RN@pageI
+  \fi
   \newpage
-  \ifRN@print\usebox\RN@pageII\else\usebox\RN@pageII\fi
+  \ifRN@print
+    \usebox\RN@pageII
+  \else
+    \usebox\RN@pageII
+  \fi
 }
 \setlength\parindent{0pt}
 \pagestyle{empty}
