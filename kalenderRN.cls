@@ -78,6 +78,9 @@
 
 \newsavebox\RN@pageI
 \newsavebox\RN@pageII
+\newsavebox\RN@tempbox
+\newdimen\RN@tempdima
+\newdimen\RN@tempdimb
 \newcommand*\RN@events@I{}
 \newcommand*\RN@events@II{}
 \newcommand*\RN@backgrounds{}
@@ -166,48 +169,60 @@
 \colorlet{bright}{dark!20}
 \colorlet{period}{gray!30}
 
-\newcommand\RN@makeKalender[2]{%
-  \begin{tikzpicture}[every day/.style={anchor=north}]%
-    \calendar[dates=#1 to #2,name=cal,day text={\%d=},day yshift=3em,%]%
-      day code={%
-        \node[name=\pgfcalendarsuggestedname,every day,shape=rectangle,%
-          minimum height=.53cm,text width=4.4cm,draw=gray]{\tikzdaytext};%
-          \draw(-1.8cm,-.1ex) node[anchor=west]{\footnotesize
-            \pgfcalendarweekdayshortname{\pgfcalendarcurrentweekday}%
-            \ifRN@showweeknumbers
-              \ifdate{Monday}{~~\stepcounter{weeknumber}\normalsize[%
-                \mbox{\footnotesize\arabic{weeknumber}}]}{}%
-            \fi
-          };%
-      },%
-      execute before day scope={%
-        \ifdate{day of month=1}{%
-          \pgftransformxshift{4.8cm}%
-          % Print month name
-          \draw (0,0)node [shape=rectangle,minimum height=.53cm,%
-            text width=4.4cm,fill=\RN@monthBGcolor,draw=\RN@monthBGcolor,%
-              text=\RN@monthColor,text centered]{%
-            \textbf{\strut\pgfcalendarmonthname{\pgfcalendarcurrentmonth}}};}{}%
-        \ifdate{workday}{\tikzset{every day/.style={fill=\RN@workdayColor}}}{}% 
-        \ifdate{Saturday}{\tikzset{every day/.style={fill=\RN@saturdayColor}}}{}%
-        \ifdate{Sunday}{\tikzset{every day/.style={fill=\RN@sundayColor}}}{}%
-        \RN@periods
-        \RN@backgrounds
-      },%
-      execute at begin day scope={%
-        \pgftransformyshift{-.53*\pgfcalendarcurrentday cm}%
-      }%
-    ];%
-    \pgfcalendarifdate{#1}{at most=06-last}{\RN@events@I}{\RN@events@II}%
-  \end{tikzpicture}%  
-}  
-
 \newcommand\RN@@title{%
-  \raisebox{-.3\height}[0pt][0pt]{\parbox[b]{\wd\RN@pageI}{%
+  \raisebox{-.3\height}{\parbox[b]{\wd\RN@tempbox}{%
     \fontsize{60}{70}\selectfont\color{\RN@titleColor}%
     \textbf{\RN@year}~\textbf{\Huge\RN@title}\hfill
   }}%
 }
+
+\newcommand\RN@makeKalender[2]{%
+  \sbox\RN@tempbox{%
+    \begin{tikzpicture}[every day/.style={anchor=north}]%
+      \calendar[dates=#1 to #2,name=cal,day text={\%d=},day yshift=3em,%]%
+        day code={%
+          \node[name=\pgfcalendarsuggestedname,every day,shape=rectangle,%
+            minimum height=.53cm,text width=4.4cm,draw=gray]{\tikzdaytext};%
+            \draw(-1.8cm,-.1ex) node[anchor=west]{\footnotesize
+              \pgfcalendarweekdayshortname{\pgfcalendarcurrentweekday}%
+              \ifRN@showweeknumbers
+                \ifdate{Monday}{~~\stepcounter{weeknumber}\normalsize[%
+                  \mbox{\footnotesize\arabic{weeknumber}}]}{}%
+              \fi
+            };%
+        },%
+        execute before day scope={%
+          \ifdate{day of month=1}{%
+            \pgftransformxshift{4.8cm}%
+            % Print month name
+            \draw (0,0)node [shape=rectangle,minimum height=.53cm,%
+              text width=4.4cm,fill=\RN@monthBGcolor,draw=\RN@monthBGcolor,%
+                text=\RN@monthColor,text centered]{%
+              \textbf{\strut\pgfcalendarmonthname{\pgfcalendarcurrentmonth}}};}{}%
+          \ifdate{workday}{\tikzset{every day/.style={fill=\RN@workdayColor}}}{}% 
+          \ifdate{Saturday}{\tikzset{every day/.style={fill=\RN@saturdayColor}}}{}%
+          \ifdate{Sunday}{\tikzset{every day/.style={fill=\RN@sundayColor}}}{}%
+          \RN@periods
+          \RN@backgrounds
+        },%
+        execute at begin day scope={%
+          \pgftransformyshift{-.53*\pgfcalendarcurrentday cm}%
+        }%
+      ];%
+      \pgfcalendarifdate{#1}{at most=06-last}{\RN@events@I}{\RN@events@II}%
+    \end{tikzpicture}%  
+  }%
+  \RN@tempdima=\ifRN@print\paperwidth\else\paperheight\fi
+  \RN@tempdimb=\ifRN@print\paperheight\else\paperwidth\fi 
+  \parbox[c][\RN@tempdima]{\RN@tempdimb}{%
+    \vfill
+    \centering
+    \RN@@title\par
+    \vfill
+    \usebox\RN@tempbox\par
+    \vfill
+  }%  
+}  
 
 \newcommand*\makeKalender[1][]{%
   \pgfkeys{/CAL/.cd, default, #1}%
@@ -216,20 +231,11 @@
     \let\year=\RN@year
     \InputIfFileExists{events\RN@year.tex}{}{}%
   \endgroup
-  \sbox{\RN@pageI}{\RN@makeKalender{\RN@year-01-01}{\RN@year-06-30}}%
+  \sbox{\RN@pageI}{\RN@makeKalender{\RN@year-01-01}{\RN@year-06-30}}%  
   \sbox{\RN@pageII}{\RN@makeKalender{\RN@year-07-01}{\RN@year-12-31}}%
-  \centering
-  \vspace*{\fill}%
-  \RN@@title
-  \vfill
-  \usebox\RN@pageI
-  \vfill
+  \ifRN@print\usebox\RN@pageI\else\usebox\RN@pageI\fi
   \newpage
-  \vspace*{\fill}%
-  \RN@@title
-  \vfill
-  \usebox\RN@pageII
-  \vfill
+  \ifRN@print\usebox\RN@pageII\else\usebox\RN@pageII\fi
 }
 \setlength\parindent{0pt}
 \pagestyle{empty}
