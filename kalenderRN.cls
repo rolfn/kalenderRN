@@ -204,7 +204,7 @@
             \draw (0,0)node [shape=rectangle,minimum height=.53cm,%
               text width=4.4cm,fill=\RN@monthBGcolor,draw=\RN@monthBGcolor,%
                 text=\RN@monthColor,text centered]{%
-              \textbf{\strut\pgfcalendarmonthname{\pgfcalendarcurrentmonth}}};}{}%
+              \textbf{\pgfcalendarmonthname{\pgfcalendarcurrentmonth}}};}{}%
           \ifdate{workday}{\tikzset{every day/.style={fill=\RN@workdayColor}}}{}% 
           \ifdate{Saturday}{\tikzset{every day/.style={fill=\RN@saturdayColor}}}{}%
           \ifdate{Sunday}{\tikzset{every day/.style={fill=\RN@sundayColor}}}{}%
