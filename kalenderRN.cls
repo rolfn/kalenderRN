@@ -9,6 +9,10 @@
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \ProvidesClass{kalenderRN}[2016/07/08 v0.2a Calendar class (RN)]
 
+\newif\ifRN@print \RN@printfalse
+
+\DeclareOption{print}{\RN@printtrue}
+
 \DeclareOption*{\PassOptionsToPackage{\CurrentOption}{xcolor}}
 \ProcessOptions\relax
 \LoadClass[landscape,a4paper,ngerman,10pt]{article}
@@ -83,6 +87,8 @@
 \newcommand*\RN@year{}
 \edef\RN@year{\the\numexpr\year}
 
+\newsavebox\RN@pageI
+\newsavebox\RN@pageII
 \newcommand*\RN@events@I{}
 \newcommand*\RN@events@II{}
 \newcommand*\RN@backgrounds{}
@@ -215,9 +221,11 @@
     \InputIfFileExists{events\RN@year.tex}{}{}%
   \endgroup
   \centering
-  \RN@makeKalender{\RN@year-01-01}{\RN@year-06-30}\par
+  \sbox{\RN@pageI}{\RN@makeKalender{\RN@year-01-01}{\RN@year-06-30}}
+  \sbox{\RN@pageII}{\RN@makeKalender{\RN@year-07-01}{\RN@year-12-31}}
+  \usebox\RN@pageI\par
   \newpage
-  \RN@makeKalender{\RN@year-07-01}{\RN@year-12-31}\par
+  \usebox\RN@pageII\par
 }
 
 \pagestyle{fancy}
