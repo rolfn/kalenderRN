@@ -7,7 +7,7 @@
 
 \setcounter{errorcontextlines}{100}
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{kalenderRN}[2016/07/18 v0.2b Calendar class (RN)]
+\ProvidesClass{kalenderRN}[2016/07/18 v0.2c Calendar class (RN)]
 
 \newif\ifRN@print \RN@printfalse
 
@@ -16,18 +16,7 @@
 \DeclareOption*{\PassOptionsToPackage{\CurrentOption}{xcolor}}
 \ProcessOptions\relax
 \LoadClass[landscape,a4paper,ngerman,10pt]{article}
-\RequirePackage[headheight=2cm,margin=.5cm,top=3.2cm,nofoot]{geometry}
-\RequirePackage{fancyhdr}
-
-\renewcommand{\headrulewidth}{0.0pt}
-\setlength{\headheight}{10ex}
-\chead{%
-  \raisebox{-.3\height}[0pt][0pt]{\parbox[b]{\textwidth}{%
-  \fontsize{60}{70}\color{\RN@titleColor}\selectfont
-  \textbf{\RN@year}~\textbf{\Huge\RN@title}\hfill
-  }}%
-}
-\cfoot{}
+\RequirePackage[margin={0mm,0mm}]{geometry}
 
 \newif\ifRN@XeOrLua \RN@XeOrLuafalse
 \RequirePackage{ifluatex,ifxetex}
@@ -211,6 +200,13 @@
     ];%
     \pgfcalendarifdate{#1}{at most=06-last}{\RN@events@I}{\RN@events@II}%
   \end{tikzpicture}%  
+}  
+
+\newcommand\RN@@title{%
+  \raisebox{-.3\height}[0pt][0pt]{\parbox[b]{\wd\RN@pageI}{%
+    \fontsize{60}{70}\selectfont\color{\RN@titleColor}%
+    \textbf{\RN@year}~\textbf{\Huge\RN@title}\hfill
+  }}%
 }
 
 \newcommand*\makeKalender[1][]{%
@@ -220,13 +216,21 @@
     \let\year=\RN@year
     \InputIfFileExists{events\RN@year.tex}{}{}%
   \endgroup
+  \sbox{\RN@pageI}{\RN@makeKalender{\RN@year-01-01}{\RN@year-06-30}}%
+  \sbox{\RN@pageII}{\RN@makeKalender{\RN@year-07-01}{\RN@year-12-31}}%
   \centering
-  \sbox{\RN@pageI}{\RN@makeKalender{\RN@year-01-01}{\RN@year-06-30}}
-  \sbox{\RN@pageII}{\RN@makeKalender{\RN@year-07-01}{\RN@year-12-31}}
-  \usebox\RN@pageI\par
+  \vspace*{\fill}%
+  \RN@@title
+  \vfill
+  \usebox\RN@pageI
+  \vfill
   \newpage
-  \usebox\RN@pageII\par
+  \vspace*{\fill}%
+  \RN@@title
+  \vfill
+  \usebox\RN@pageII
+  \vfill
 }
-
-\pagestyle{fancy}
+\setlength\parindent{0pt}
+\pagestyle{empty}
 \endinput
