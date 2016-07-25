@@ -7,7 +7,7 @@
 
 \setcounter{errorcontextlines}{100}
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{kalenderRN}[2016/07/18 v0.3a Calendar class (RN)]
+\ProvidesClass{kalenderRN}[2016/07/25 v0.3b Calendar class (RN)]
 
 \newif\ifRN@print \RN@printfalse
 
@@ -92,6 +92,8 @@
 \newcommand*\RN@backgrounds{}
 \newcommand*\RN@periods{}
 \newcommand*\RN@title{}
+\newcommand*\RN@tempa{}
+\newcommand*\RN@tempb{}
 \newcounter{weeknumber}
 \newif\ifRN@showweeknumbers \RN@showweeknumbersfalse
 
@@ -134,10 +136,15 @@
       \noexpand\tikzset{every day/.style={fill=\RN@period@color}}}{}%
   }%
   \expandafter\g@addto@macro\expandafter\RN@periods\expandafter{\@tempa}%
-  \ifx\RN@period@name\@empty\else 
+  \ifx\RN@period@name\@empty\else
     \pgfcalendar{}{#1}{#2}{%
-      \event{\pgfcalendarcurrentyear-\pgfcalendarcurrentmonth-\pgfcalendarcurrentday}%
-        {\RN@period@name}%
+      \edef\RN@tempa{\pgfcalendarcurrentyear-\pgfcalendarcurrentmonth-\pgfcalendarcurrentday}%
+      \@ifundefined{event@\RN@tempa}{%
+        \event{\RN@tempa}{\RN@period@name}%
+        \edef\RN@tempb{\noexpand\expandafter\noexpand\gdef
+          \noexpand\csname event@\RN@tempa\noexpand\endcsname{\RN@period@name}}%
+        \RN@tempb
+      }{}%
     }%
   \fi
 }
@@ -156,11 +163,11 @@
         \noexpand\makebox[0pt][r]{\noexpand\resizebox{!}{1.15ex}{%
           \noexpand\varwidth{4.6cm}#2\noexpand\strut\noexpand\endvarwidth}}};}%
     }%
+    \@namedef{event@#1}{#2}%
+    \pgfcalendarifdate{#1}{at most=06-last}% first half-year?
+    {\expandafter\g@addto@macro\expandafter\RN@events@I\expandafter{\@tempa}}%
+    {\expandafter\g@addto@macro\expandafter\RN@events@II\expandafter{\@tempa}}%
   }{}%
-  \@namedef{event@#1}{#2}%
-  \pgfcalendarifdate{#1}{at most=06-last}% first half-year?
-  {\expandafter\g@addto@macro\expandafter\RN@events@I\expandafter{\@tempa}}%
-  {\expandafter\g@addto@macro\expandafter\RN@events@II\expandafter{\@tempa}}%
   \if@tempswa
     \edef\@tempa{%
       \noexpand\ifdate{equals=#1}{\noexpand\tikzset{%
