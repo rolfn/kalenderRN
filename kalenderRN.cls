@@ -15,7 +15,7 @@
 
 \DeclareOption*{\PassOptionsToPackage{\CurrentOption}{xcolor}}
 \ProcessOptions\relax
-\LoadClass[a4paper,ngerman,10pt]{article}  
+\LoadClass[a4paper,ngerman,10pt]{article}
 \ifRN@print
   \RequirePackage{graphicx}
   \PassOptionsToPackage{portrait}{geometry}
@@ -116,13 +116,13 @@
   /CAL/.is family, /CAL,
   period/.cd,
   default/.style={color=period,name={}},
-  color/.estore in = \RN@period@color, 
-  name/.estore in = \RN@period@name 
+  color/.estore in = \RN@period@color,
+  name/.estore in = \RN@period@name
 }
 \pgfkeys{%
   /CAL/.is family, /CAL,
   event/.cd,
-  color/.estore in = \RN@eventColor 
+  color/.estore in = \RN@eventColor
 }
 
 \newcommand*\period[2]{%
@@ -152,7 +152,7 @@
   \@ifstar{\@tempswatrue\RN@event@i}{\@tempswafalse\RN@event@i}%
 }
 \newcommand*\RN@event@i[2]{%
-  \@ifnextchar[{\RN@event@ii{#1}{#2}}{\RN@event@ii{#1}{#2}[]} 
+  \@ifnextchar[{\RN@event@ii{#1}{#2}}{\RN@event@ii{#1}{#2}[]}
 }
 \newcommand*\RN@event@ii{}%
 \def\RN@event@ii#1#2[#3]{%
@@ -174,7 +174,7 @@
         every day/.style={fill=\RN@eventColor}}}{}
     }%
     \expandafter\g@addto@macro\expandafter\RN@backgrounds\expandafter{\@tempa}%
-  \fi 
+  \fi
 }
 
 \definecolor{dark}{HTML}{A57C00}
@@ -212,10 +212,10 @@
               text width=4.4cm,fill=\RN@monthBGcolor,draw=\RN@monthBGcolor,%
                 text=\RN@monthColor,text centered]{%
               \textbf{\pgfcalendarmonthname{\pgfcalendarcurrentmonth}}};}{}%
-          \ifdate{workday}{\tikzset{every day/.style={fill=\RN@workdayColor}}}{}% 
+          \ifdate{workday}{\tikzset{every day/.style={fill=\RN@workdayColor}}}{}%
           \ifdate{Saturday}{\tikzset{every day/.style={fill=\RN@saturdayColor}}}{}%
           \ifdate{Sunday}{\tikzset{every day/.style={fill=\RN@sundayColor}}}{}%
-          \RN@periods
+          \RN@periods% TODO: Evtl. zwei Zeilen früher
           \RN@backgrounds
         },%
         execute at begin day scope={%
@@ -223,10 +223,10 @@
         }%
       ];%
       \pgfcalendarifdate{#1}{at most=06-last}{\RN@events@I}{\RN@events@II}%
-    \end{tikzpicture}%  
+    \end{tikzpicture}%
   }%
   \RN@tempdima=\ifRN@print\paperwidth\else\paperheight\fi
-  \RN@tempdimb=\ifRN@print\paperheight\else\paperwidth\fi 
+  \RN@tempdimb=\ifRN@print\paperheight\else\paperwidth\fi
   \parbox[c][\RN@tempdima]{\RN@tempdimb}{%
     \vfill
     \centering
@@ -234,8 +234,8 @@
     \vfill
     \usebox\RN@tempbox\par
     \vfill
-  }%  
-}  
+  }%
+}
 
 \newcommand*\makeKalender[1][]{%
   \pgfkeys{/CAL/.cd, default, #1}%
@@ -244,7 +244,7 @@
     \let\year=\RN@year
     \InputIfFileExists{events\RN@year.tex}{}{}%
   \endgroup
-  \sbox{\RN@pageI}{\RN@makeKalender{\RN@year-01-01}{\RN@year-06-30}}%  
+  \sbox{\RN@pageI}{\RN@makeKalender{\RN@year-01-01}{\RN@year-06-30}}%
   \sbox{\RN@pageII}{\RN@makeKalender{\RN@year-07-01}{\RN@year-12-31}}%
   \ifRN@print
     \rotatebox[origin=c]{90}{\usebox\RN@pageI}%
