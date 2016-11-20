@@ -213,9 +213,9 @@
                 text=\RN@monthColor,text centered]{%
               \textbf{\pgfcalendarmonthname{\pgfcalendarcurrentmonth}}};}{}%
           \ifdate{workday}{\tikzset{every day/.style={fill=\RN@workdayColor}}}{}%
+          \RN@periods
           \ifdate{Saturday}{\tikzset{every day/.style={fill=\RN@saturdayColor}}}{}%
           \ifdate{Sunday}{\tikzset{every day/.style={fill=\RN@sundayColor}}}{}%
-          \RN@periods% TODO: Evtl. zwei Zeilen früher
           \RN@backgrounds
         },%
         execute at begin day scope={%
