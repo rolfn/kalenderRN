@@ -15,16 +15,19 @@ MAIN_FILES = $(MAIN).cls
 DOC_FILES = README.md $(EXAMPLE).tex events$(YEAR).tex
 ARCHNAME = $(MAIN)-$(VERSION).zip
 
-all : EXAMPLE.pdf
+all : $(EXAMPLE).pdf
 
 $(EXAMPLE).pdf : $(EXAMPLE).tex $(MAIN).cls events$(YEAR).tex
 	$(LATEX) $<
 
-dist :
+dist : $(ARCHNAME)
+
+$(ARCHNAME) :
+	$(RM) $@
 	mkdir -p $(DIST_DIR)/doc
 	cp -p $(MAIN_FILES) $(DIST_DIR)/
 	cp -p $(DOC_FILES) $(DIST_DIR)/doc/
-	zip $(ARCHNAME) -r $(DIST_DIR)
+	zip $@ -r $(DIST_DIR)
 	rm -rf $(DIST_DIR)
 
 clean :
