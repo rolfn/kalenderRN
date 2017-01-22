@@ -30,7 +30,7 @@
 
 \ifRN@XeOrLua
   \RequirePackage{fontspec}
-  \setsansfont[Ligatures=TeX]{TeX Gyre Heros}
+  \setsansfont{TeX Gyre Heros}[Ligatures=TeX]
 \else
   \RequirePackage[T1]{fontenc}
   \RequirePackage{textcomp}
