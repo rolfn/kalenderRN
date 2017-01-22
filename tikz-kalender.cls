@@ -7,7 +7,7 @@
 
 \setcounter{errorcontextlines}{100}
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{kalenderRN}[2016/07/25 v0.3b Calendar class (RN)]
+\ProvidesClass{kalenderRN}[2017/01/22 v0.3c Calendar class (RN)]
 
 \newif\ifRN@print \RN@printfalse
 

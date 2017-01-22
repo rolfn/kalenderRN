@@ -1,8 +1,8 @@
-# Rolf Niepraschk, 2017-01-15, Rolf.Niepraschk@gmx.de
+# Rolf Niepraschk, 2017-01-22, Rolf.Niepraschk@gmx.de
 
 .SUFFIXES : .dtx .ins .tex .ltx .dvi .ps .pdf .eps
 
-MAIN = kalenderRN
+MAIN = tikz-kalender
 YEAR = 2016
 EXAMPLE = Kalender$(YEAR)
 LATEX = pdflatex
@@ -11,8 +11,8 @@ TEX = tex
 VERSION = $(shell awk '/ProvidesClass/ {print $$2}' $(MAIN).cls)
 
 DIST_DIR = $(MAIN)
-MAIN_FILES = $(MAIN).cls
-DOC_FILES = README.md $(EXAMPLE).tex events$(YEAR).tex
+MAIN_FILES = $(MAIN).cls README.md 
+DOC_FILES = $(EXAMPLE).pdf $(EXAMPLE).tex events$(YEAR).tex
 ARCHNAME = $(MAIN)-$(VERSION).zip
 
 all : $(EXAMPLE).pdf
