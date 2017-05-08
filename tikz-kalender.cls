@@ -49,7 +49,7 @@
   \fi
 }
 
-\RequirePackage[main=ngerman]{babel}
+\RequirePackage[ngerman,english]{babel}
 
 \RequirePackage[ngerman]{translator}
 
