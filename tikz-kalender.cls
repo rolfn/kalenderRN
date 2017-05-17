@@ -7,7 +7,7 @@
 
 \setcounter{errorcontextlines}{100}
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{tikz-kalender}[2017/05/17 v0.4a Calendar class (RN)] 
+\ProvidesClass{tikz-kalender}[2017/05/17 v0.4b Calendar class (RN)] 
 
 \DeclareOption*{\OptionNotUsed}
 \ProcessOptions\relax
@@ -206,18 +206,6 @@
   \raisebox{.15ex}{[\raisebox{-.15ex}{\arabic{#1}}]}%
   \hspace{20\RN@xunit}%
 }
-\newcommand*\RN@formatEventX[1]{%
-  \varwidth{\RN@eventwidthL}#1\strut\endvarwidth% ??????
-}
-\newcommand*\RN@formatEventXX[1]{%
-  \makebox[0pt][r]{\frame{\resizebox{\RN@eventwidthL}{!}{% ??????
-    \parbox[t][\RN@dayheight]{%
-    \RN@eventwidthL}{\RN@eventFont\raggedleft#1\strut}}}}%
-}
-\newcommand*\RN@formatEventXXX[2]{%
-  \makebox[0pt][r]{\resizebox{#1}{\RN@dayheight}{% ??????
-    \frame{\varwidth[t]{#1}#2\strut\endvarwidth}}}%  
-}
 \newcommand*\RN@formatEvent[2]{%
   \RN@eventFont
   \def\RN@tempa{\strut\hfill#2}%
@@ -380,8 +368,6 @@
     \usebox\RN@pageII
   \fi
 }
-
-
 
 \setlength\parindent{0pt}
 \pagestyle{empty}
