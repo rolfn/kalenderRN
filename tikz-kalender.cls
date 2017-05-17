@@ -133,9 +133,7 @@
   \fi
   \RequirePackage[margin={0mm,0mm}]{geometry}
   \ifRN@XeOrLua\else
-    \@ifpackageloaded{inputenc}{}{%
-      \RequirePackage[utf8]{inputenc}%
-    }%
+    \@ifpackageloaded{inputenc}{}{\RequirePackage[utf8]{inputenc}}%
   \fi
   \RequirePackage{babel,translator,tikz}
   \input{tikz-kalender-translation.clo}
