@@ -139,7 +139,7 @@
   \fi
   \RequirePackage{babel,translator,tikz}
   \input{tikz-kalender-translation.clo}
-  \usetikzlibrary{calc}
+  %\usetikzlibrary{calc}
   \usetikzlibrary{calendar}
 }
 
