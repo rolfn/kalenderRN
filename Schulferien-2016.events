@@ -1,0 +1,9 @@
+
+\period{2016-02-01}{2016-02-06}[color=LightGreen]% Winterferien in Berlin
+\period{2016-03-21}{2016-04-02}[color=LightGreen]% Osterferien in Berlin
+\period{2016-05-17}{2016-05-18}[color=LightGreen]% Pfingstferien in Berlin
+\period{2016-07-21}{2016-09-02}[color=LightGreen]% Sommerferien in Berlin
+\period{2016-10-17}{2016-10-28}[color=LightGreen]% Herbstferien in Berlin
+\period{2016-12-23}{2017-01-03}[color=LightGreen]% Weihnachtsferien in Berlin
+
+\endinput

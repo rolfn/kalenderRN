@@ -1,0 +1,23 @@
+\ProvidesFile{tikz-kalender-translation.clo}[2017/05/08 v1.0b
+  Calendar translations (RN)]
+
+% shorter strings
+\deftranslation[to=Polish]{Mon}{Po}% Poniedziałek
+\deftranslation[to=Polish]{Tue}{Wt}% Wtorek
+\deftranslation[to=Polish]{Wed}{\'{S}r}% Środa
+\deftranslation[to=Polish]{Thu}{Cz}% Czwartek
+\deftranslation[to=Polish]{Fri}{Pi}% Piątek
+\deftranslation[to=Polish]{Sat}{So}% Sobota
+\deftranslation[to=Polish]{Sun}{Ni}% Niedziela
+
+\deftranslation[to=English]{Mon}{Mo}
+\deftranslation[to=English]{Tue}{Tu}
+\deftranslation[to=English]{Wed}{We}
+\deftranslation[to=English]{Thu}{Th}
+\deftranslation[to=English]{Fri}{Fr}
+\deftranslation[to=English]{Sat}{Sa}
+\deftranslation[to=English]{Sun}{Su}
+
+\endinput
+%%
+%% End of file `tikz-kalender-translation.clo'.

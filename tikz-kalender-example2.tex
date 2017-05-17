@@ -1,0 +1,36 @@
+\listfiles
+
+\documentclass{tikz-kalender}
+
+% all options:
+\setup{%
+,lang=german% language for day names and month names; default: english
+,paper=a0% papersize understandable by the geometry package; default: a4
+,year=2016% base of the calender calculation
+,yearFont={\itshape}% additional font definition
+,yearText={}%default: the content of the year option 
+,title={2016}
+,titleFont={\fontsize{1.4em}{1.4em}}% ~140% of default
+,titleColor=IndianRed3
+,showweeknumbers% default: false
+,events={Geburtstage}% events and periods (files with ending ".events")
+,print=true% printer-friendly orientation (double-side printing)
+,xcoloroptions={x11names}% additional options; default: svgnames
+%,monthFont% additional font definition
+%,dayFont% additional font definition
+%,dayNbFont% additional font definition
+%,weekNbFont% additional font definition
+%,eventFont% additional font definition
+%,eventColor% additional font definition
+%,periodColor% additional font definition
+%,monthBGcolor% additional font definition
+%,monthColor% additional font definition
+%,workdayColor% additional font definition
+%,saturdayColo% additional font definitionr
+%,sundayColor% additional font definition
+}
+
+\begin{document}
+  \makeKalender
+\end{document}
+

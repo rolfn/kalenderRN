@@ -1,0 +1,18 @@
+
+% Jährlich wiederkehrende Termine sollten das Makro \year enthalten.
+% Yearly events should contain the macro \year.
+
+\event*{\year-01-01}{Neujahr}
+\event*{2016-03-25}{Karfreitag}
+\event*{2016-03-27}{Ostersonntag}
+\event*{2016-03-28}{Ostermontag}
+\event*{\year-05-01}{Tag der Arbeit}
+\event*{2016-05-05}{Himmelfahrt}
+\event{2016-05-15}{Pfingstsonntag}
+\event*{2016-05-16}{Pfingstmontag}
+\event*{\year-10-03}{Tag der deutschen der deutschen Einheit}
+\event{\year-12-24}{Heiligabend}
+\event*{\year-12-25}{1. Weihnachtstag}
+\event*{\year-12-26}{2. Weihnachtstag}
+
+\endinput
