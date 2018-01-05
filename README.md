@@ -27,7 +27,7 @@ The class »tikz-kalender« requires the package »tikz« and the tkiz libraries
 default: a4)
 * `print=`_true or empty or false_ (printer-friendly orientation for
 double-side printing; default: false)
-* `xcoloroptions=`_options_ (passed to package xcolor)
+* `xcoloroptions=`_options_ (passed to package xcolor; default: svgnames)
 
 ##### Color definitions
 
