@@ -78,7 +78,7 @@ colored event with a special color
 I the case of more than one events for a particular day only the first one is
 effective.
 
-* `\period{2016-12-23}{2017-01-03}; period colored with the color defined
+* `\period{2016-12-23}{2017-01-03}`; period colored with the color defined
 by the key `periodColor`
 
 * `\period{2016-02-01}{2016-02-06}[color=LightGreen]`; period colored with a
