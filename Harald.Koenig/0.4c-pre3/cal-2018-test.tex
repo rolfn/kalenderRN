@@ -1,0 +1,34 @@
+\listfiles
+\documentclass{tikz-kalender}
+
+\usepackage[latin1]{inputenc}
+
+% a simple calender
+
+\setup{%
+%,print
+,lang=german% language for day names and month names; default: english
+,year=2018
+,title={Haralds Kalender}
+,events={Urlaub,Schulferien-2018,Feiertage-2018,Geburtstage,Sonstiges}
+%,events={xxx,Feiertage-2018}
+,showweeknumbers% default: false
+,monthBGcolor=red% additional font definition
+,monthColor=white% additional font definition
+,titleColor=black
+%,monthFont% additional font definition
+%,dayFont% additional font definition
+%,dayNbFont% additional font definition
+%,weekNbFont% additional font definition
+%,eventFont% additional font definition
+,eventColor=white% additional font definition
+%,periodColor% additional font definition
+%,monthBGcolor% additional font definition
+%,monthColor% additional font definition
+%,workdayColor% additional font definition
+,saturdayColor=red!10% additional font definitionr
+,sundayColor=red!20% additional font definition
+}
+\begin{document}
+  \makeKalender
+\end{document} 
