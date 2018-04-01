@@ -7,7 +7,7 @@
 
 \setcounter{errorcontextlines}{100}
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{tikz-kalender}[2018/03/27 v0.4c-pre3 Calendar class (RN)] 
+\ProvidesClass{tikz-kalender}[2018/04/01 v0.4c Calendar class (RN)] 
 
 \DeclareOption*{\OptionNotUsed}
 \ProcessOptions\relax
@@ -137,7 +137,6 @@
   \fi
   \RequirePackage{babel,translator,tikz}
   \input{tikz-kalender-translation.clo}
-  %\usetikzlibrary{calc}
   \usetikzlibrary{calendar}
 }
 
@@ -214,7 +213,7 @@
     \def\RN@tempa{\fontsize{\@tempdimb}{1.1\@tempdimb}\selectfont#2}%
   \fi
   \makebox[-50\RN@xunit][r]{\raisebox{0.55\totalheight}[\totalheight]{%
-    \parbox[c]{#1}{\nointerlineskip\hskip\z@\hfill\RN@tempa}}}%  
+    \parbox[c]{#1}{\raggedleft\hskip\z@\RN@tempa}}}% \nointerlineskip 
 }
 
 \newcommand*\RN@setFont[3][]{%
@@ -254,10 +253,7 @@
   \@ifnextchar[{\RN@event@ii{#1}{#2}}{\RN@event@ii{#1}{#2}[]}%
 }
 
-
-
 \newcommand*\RN@event@ii{}%
-
 \def\RN@event@ii#1#2[#3]{%
   \begingroup
   \pgfkeys{/RN/event/.cd, #3}%
@@ -278,7 +274,7 @@
       {\expandafter\g@addto@macro\expandafter\RN@events@II\expandafter{\@tempa}}%
   }{%
     \expandafter\protected@xdef\csname event@#1\endcsname{%
-      #2~\csname event@#1\endcsname}%
+      #2, \csname event@#1\endcsname}%
   }  
   \if@tempswa
     \edef\@tempa{%

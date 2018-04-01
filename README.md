@@ -75,9 +75,6 @@ by the key `eventColor` (general holiday)
 * `\event*{2016-07-10}{Fußball-EM: Endspiel}[color=DarkTurquoise]`;
 colored event with a special color
 
-I the case of more than one events for a particular day only the first one is
-effective.
-
 * `\period{2016-12-23}{2017-01-03}`; period colored with the color defined
 by the key `periodColor`
 
@@ -87,4 +84,4 @@ special color
 * `\period{2016-09-12}{2016-10-04}[color=red!30,name=Urlaub]`; named period
 colored with a special color
 
-Rolf Niepraschk, 2018-01-05
+Rolf Niepraschk, 2018-04-01
