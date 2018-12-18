@@ -7,7 +7,7 @@
 
 \setcounter{errorcontextlines}{100}
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{tikz-kalender}[2018/04/01 v0.4c Calendar class (RN)] 
+\ProvidesClass{tikz-kalender}[2018/12/18 v0.4d Calendar class (RN)] 
 
 \DeclareOption*{\OptionNotUsed}
 \ProcessOptions\relax
@@ -341,7 +341,17 @@
 }
 
 \newcommand*\makeKalender{%
-  \setcounter{weeknumber}{0}%
+  \@tempswafalse
+  \pgfcalendarifdate{\RN@year-01-01}{Tuesday}{\@tempswatrue}{%
+    \pgfcalendarifdate{\RN@year-01-01}{Wednesday}{\@tempswatrue}{%
+      \pgfcalendarifdate{\RN@year-01-01}{Thursday}{\@tempswatrue}{}% 
+    }%
+  }%
+  \if@tempswa
+    \setcounter{weeknumber}{1}%
+  \else
+    \setcounter{weeknumber}{0}%
+  \fi
   \begingroup%
     \let\year=\RN@year
     \def\RN@event@ii##1##2[##3]{}% 1st loop: only the periods 
