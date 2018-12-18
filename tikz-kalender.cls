@@ -341,17 +341,8 @@
 }
 
 \newcommand*\makeKalender{%
-  \@tempswafalse
-  \pgfcalendarifdate{\RN@year-01-01}{Tuesday}{\@tempswatrue}{%
-    \pgfcalendarifdate{\RN@year-01-01}{Wednesday}{\@tempswatrue}{%
-      \pgfcalendarifdate{\RN@year-01-01}{Thursday}{\@tempswatrue}{}% 
-    }%
-  }%
-  \if@tempswa
-    \setcounter{weeknumber}{1}%
-  \else
-    \setcounter{weeknumber}{0}%
-  \fi
+  \pgfcalendarifdate{\RN@year-01-01}{Tuesday,Wednesday,Thursday}{%
+    \setcounter{weeknumber}{1}}{\setcounter{weeknumber}{0}}%
   \begingroup%
     \let\year=\RN@year
     \def\RN@event@ii##1##2[##3]{}% 1st loop: only the periods 
