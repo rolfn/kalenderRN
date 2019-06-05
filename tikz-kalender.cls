@@ -7,7 +7,7 @@
 
 \setcounter{errorcontextlines}{100}
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{tikz-kalender}[2018/12/18 v0.4d Calendar class (RN)] 
+\ProvidesClass{tikz-kalender}[2019/06/05 v0.4e-pre Calendar class (RN)] 
 
 \DeclareOption*{\OptionNotUsed}
 \ProcessOptions\relax
@@ -98,8 +98,6 @@
 
 \newcommand*\setup[1]{\pgfqkeys{/RN}{#1}}
 
-\PassOptionsToPackage{english}{babel}
-\PassOptionsToPackage{english}{translator}
 \PassOptionsToPackage{a4paper}{geometry}
 \PassOptionsToPackage{svgnames}{xcolor}
 
@@ -136,6 +134,8 @@
     \@ifpackageloaded{inputenc}{}{\RequirePackage[utf8]{inputenc}}%
   \fi
   \RequirePackage{babel,translator,tikz}
+  \def\pgfutil@translate#1{\translate{#1}}
+  % ^^^ wegen Fehler in pgfutil-latex.def (2019-06)
   \input{tikz-kalender-translation.clo}
   \usetikzlibrary{calendar}
 }
