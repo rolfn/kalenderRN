@@ -134,8 +134,10 @@
     \@ifpackageloaded{inputenc}{}{\RequirePackage[utf8]{inputenc}}%
   \fi
   \RequirePackage{babel,translator,tikz}
-  \def\pgfutil@translate#1{\translate{#1}}
-  % ^^^ wegen Fehler in pgfutil-latex.def (2019-06)
+  \@ifpackagelater{pgf}{2019/05/10}{}{%
+    \def\pgfutil@translate#1{\translate{#1}}%
+    % Correct the wrong definition in `pgfutil-latex.def' 
+  }%
   \input{tikz-kalender-translation.clo}
   \usetikzlibrary{calendar}
 }
