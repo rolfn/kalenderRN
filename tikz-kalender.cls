@@ -7,7 +7,7 @@
 
 \setcounter{errorcontextlines}{100}
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{tikz-kalender}[2019/06/05 v0.4e Calendar class (RN)] 
+\ProvidesClass{tikz-kalender}[2019/11/22 v0.4f Calendar class (RN)] 
 
 \DeclareOption*{\OptionNotUsed}
 \ProcessOptions\relax
@@ -249,6 +249,11 @@
 }
 
 \newcommand*\event{%
+  \ClassError{tikz-kalender}{%
+    Macro \string\event\space is only allowed inside of .events files}{}%
+}
+
+\newcommand*\RN@event{%
   \@ifstar{\@tempswatrue\RN@event@i}{\@tempswafalse\RN@event@i}%
 }
 \newcommand*\RN@event@i[2]{%
@@ -346,12 +351,14 @@
   \pgfcalendarifdate{\RN@year-01-01}{Tuesday,Wednesday,Thursday}{%
     \setcounter{weeknumber}{1}}{\setcounter{weeknumber}{0}}%
   \begingroup%
+    \let\event=\RN@event
     \let\year=\RN@year
     \def\RN@event@ii##1##2[##3]{}% 1st loop: only the periods 
     \def\do##1{\InputIfFileExists{##1.events}{}{}}%
     \expandafter\docsvlist\expandafter{\RN@events@files}%
   \endgroup
   \begingroup
+    \let\event=\RN@event
     \let\year=\RN@year
     \def\RN@period@i##1##2[##3]{}% 2nd loop: only the events 
     \def\do##1{\InputIfFileExists{##1.events}{}{}}%
