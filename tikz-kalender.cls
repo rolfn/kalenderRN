@@ -296,9 +296,13 @@
           \noexpand\csname event@#1\endcsname}};%
       }
     }%
-    \pgfcalendarifdate{#1}{at most=06-last}% first half-year?
+    \ifRN@onePageOnly
       {\expandafter\g@addto@macro\expandafter\RN@events@I\expandafter{\@tempa}}%
-      {\expandafter\g@addto@macro\expandafter\RN@events@II\expandafter{\@tempa}}%
+    \else
+      \pgfcalendarifdate{#1}{at most=06-last}% first half-year?
+        {\expandafter\g@addto@macro\expandafter\RN@events@I\expandafter{\@tempa}}%
+        {\expandafter\g@addto@macro\expandafter\RN@events@II\expandafter{\@tempa}}%
+    \fi
   }{%
     \expandafter\protected@xdef\csname event@#1\endcsname{%
       #2, \csname event@#1\endcsname}%
