@@ -7,7 +7,7 @@
 
 \setcounter{errorcontextlines}{100}
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{tikz-kalender}[2026/01/27 v0.6a Calendar class (RN)]
+\ProvidesClass{tikz-kalender}[2026/02/17 v0.6b Calendar class (RN)]
 
 \DeclareOption*{\OptionNotUsed}
 \ProcessOptions\relax
