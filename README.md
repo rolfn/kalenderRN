@@ -85,4 +85,4 @@ special color
 * `\period{2016-09-12}{2016-10-04}[color=red!30,name=Urlaub]`; named period
 colored with a special color
 
-Rolf Niepraschk, 2018-04-01
+Rolf Niepraschk, 2026-01-27
