@@ -1,0 +1,55 @@
+% Jährlich wiederkehrende Termine sollten das Makro \calYear enthalten.
+% Yearly events should contain the macro \calYear.
+
+% === Mit Ostern verbundene Feiertage ===
+% === Holidays associated with Easter ===
+% Erfordert \usepackage{easter} im LaTeX-Dokument
+% Requires \usepackage{easter} in the LaTeX document
+
+\selectComputus{gregorian}
+\Easter*[\calYear] 
+
+\event*{\theEasterYear-\twoDigits\theEasterMonth-\twoDigits\theEasterDay}{Ostersonntag}
+
+\setstartyear{\calYear}%
+\setdatenumber{\theEasterYear}{\theEasterMonth}{\theEasterDay}% sets the counter "datenumber"
+
+\addtocounter{datenumber}{-2}% easter - 2
+\setmydatebynumber{\thedatenumber}{TransposedYear}{TransposedMonth}{TransposedDay}
+\event*{\theTransposedYear-\twoDigits\theTransposedMonth-\twoDigits\theTransposedDay}{Karfreitag}
+
+\addtocounter{datenumber}{3}% easter + 1
+\setmydatebynumber{\thedatenumber}{TransposedYear}{TransposedMonth}{TransposedDay}
+\event*{\theTransposedYear-\twoDigits\theTransposedMonth-\twoDigits\theTransposedDay}{Ostermontag}
+
+\addtocounter{datenumber}{38}% easter + 39
+\setmydatebynumber{\thedatenumber}{TransposedYear}{TransposedMonth}{TransposedDay}
+\event*{\theTransposedYear-\twoDigits\theTransposedMonth-\twoDigits\theTransposedDay}{Christi Himmelfahrt}
+
+\addtocounter{datenumber}{10}% easter + 49
+\setmydatebynumber{\thedatenumber}{TransposedYear}{TransposedMonth}{TransposedDay}
+\event*{\theTransposedYear-\twoDigits\theTransposedMonth-\twoDigits\theTransposedDay}{Pfingstsonntag}
+
+\addtocounter{datenumber}{1}% easter + 50
+\setmydatebynumber{\thedatenumber}{TransposedYear}{TransposedMonth}{TransposedDay}
+\event*{\theTransposedYear-\twoDigits\theTransposedMonth-\twoDigits\theTransposedDay}{Pfingstmontag}
+
+% Nur für Karneval-Verrückte
+% For Carnival fanatics only
+\setdatenumber{\theEasterYear}{\theEasterMonth}{\theEasterDay}%
+\addtocounter{datenumber}{-48}% easter - 48
+\setmydatebynumber{\thedatenumber}{TransposedYear}{TransposedMonth}{TransposedDay}
+\event*{\theTransposedYear-\twoDigits\theTransposedMonth-\twoDigits\theTransposedDay}{Rosenmontag}
+
+% === Andere jährliche Feiertage ===
+% === Other annual holidays ===
+
+\event*{\calYear-01-01}{Neujahr}
+\event*{\calYear-05-01}{Tag der Arbeit}
+\event*{\calYear-10-03}{Tag der deutschen Einheit}
+\event{\calYear-12-24}{Heiligabend}
+\event*{\calYear-12-25}{1. Weihnachtstag}
+\event*{\calYear-12-26}{2. Weihnachtstag}
+
+\endinput
+

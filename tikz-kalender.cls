@@ -7,14 +7,14 @@
 
 \setcounter{errorcontextlines}{100}
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\ProvidesClass{tikz-kalender}[2026/02/17 v0.6b Calendar class (RN)]
+\ProvidesClass{tikz-kalender}[2026/07/13 v0.7a Calendar class (RN)]
 
 \DeclareOption*{\OptionNotUsed}
 \ProcessOptions\relax
 
 \newcommand*\RN@events@files{}
 \newcommand*\RN@titleFont{}
-\newcommand*\RN@yearFont{}
+\newcommand*\calYearFont{}
 \newcommand*\RN@monthFont{}
 \newcommand*\RN@dayFont{}
 \newcommand*\RN@dayNbFont{}
@@ -22,8 +22,8 @@
 \newcommand*\RN@eventFont{}
 \newcommand*\RN@normalFont{}
 \newcommand*\RN@title{}
-\newcommand*\RN@year{}\edef\RN@year{\the\numexpr\year}
-\newcommand*\RN@yearText{\RN@year}
+\newcommand*\calYear{}\edef\calYear{\the\numexpr\year}
+\newcommand*\calYearText{\calYear}
 \newcommand*\RN@period@name{}
 \newcommand*\RN@xcolorOptions{}
 \newcommand*\RN@events@I{}
@@ -66,7 +66,7 @@
 
 \LoadClass{article}
 
-\RequirePackage{pgfkeys,etoolbox,ragged2e}
+\RequirePackage{pgfkeys,etoolbox,ragged2e,easter}
 
 \pgfkeys{
   /RN/.cd,
@@ -75,15 +75,15 @@
   print/.is if = RN@print,
   events/.store in=\RN@events@files,
   titleFont/.store in=\RN@titleFont,
-  yearFont/.store in=\RN@yearFont,
+  yearFont/.store in=\calYearFont,
   monthFont/.store in=\RN@monthFont,
   dayFont/.store in=\RN@dayFont,
   dayNbFont/.store in=\RN@dayNbFont,
   weekNbFont/.store in=\RN@weekNbFont,
   eventFont/.store in=\RN@eventFont,% ???
   title/.store in=\RN@title,
-  year/.store in=\RN@year,
-  yearText/.store in=\RN@yearText,
+  year/.store in=\calYear,
+  yearText/.store in=\calYearText,
   titleColor/.store in=\RN@titleColor,
   eventColor/.store in=\RN@eventColor,
   periodColor/.store in=\RN@periodColor,
@@ -204,7 +204,7 @@
 \newcommand\RN@formatTitle[3]{%
   \raisebox{-.3\height}{\parbox[b]{#1}{%
     \color{\RN@titleColor}%
-    \makebox[0pt][l]{\RN@yearFont#2}\hfill
+    \makebox[0pt][l]{\calYearFont#2}\hfill
     \RN@titleFont#3\hfill\mbox{}%
   }}%
 }
@@ -364,7 +364,7 @@
   \parbox[c][\RN@calheight]{\RN@calwidth}{%
     \vfill
     \centering
-    \RN@formatTitle{\wd\RN@tempbox}{\RN@yearText}{\RN@title}%
+    \RN@formatTitle{\wd\RN@tempbox}{\calYearText}{\RN@title}%
     \vfill
     \usebox\RN@tempbox
     \vfill
@@ -372,27 +372,25 @@
 }
 
 \newcommand*\makeKalender{%
-  \pgfcalendarifdate{\RN@year-01-01}{Tuesday,Wednesday,Thursday}{%
+  \pgfcalendarifdate{\calYear-01-01}{Tuesday,Wednesday,Thursday}{%
     \setcounter{weeknumber}{1}}{\setcounter{weeknumber}{0}}%
   \begingroup%
     \let\event=\RN@event
-    \let\year=\RN@year
     \def\RN@event@ii##1##2[##3]{}% 1st loop: only the periods 
     \def\do##1{\InputIfFileExists{##1.events}{}{}}%
     \expandafter\docsvlist\expandafter{\RN@events@files}%
   \endgroup
   \begingroup
     \let\event=\RN@event
-    \let\year=\RN@year
     \def\RN@period@i##1##2[##3]{}% 2nd loop: only the events 
     \def\do##1{\InputIfFileExists{##1.events}{}{}}%
     \expandafter\docsvlist\expandafter{\RN@events@files}%
   \endgroup
   \ifRN@onePageOnly
-    \sbox{\RN@pageI}{\RN@makeKalender{\RN@year-01-01}{\RN@year-12-31}}%
+    \sbox{\RN@pageI}{\RN@makeKalender{\calYear-01-01}{\calYear-12-31}}%
   \else
-    \sbox{\RN@pageI}{\RN@makeKalender{\RN@year-01-01}{\RN@year-06-30}}%
-    \sbox{\RN@pageII}{\RN@makeKalender{\RN@year-07-01}{\RN@year-12-31}}%
+    \sbox{\RN@pageI}{\RN@makeKalender{\calYear-01-01}{\calYear-06-30}}%
+    \sbox{\RN@pageII}{\RN@makeKalender{\calYear-07-01}{\calYear-12-31}}%
   \fi
   \ifRN@print
     \rotatebox[origin=c]{90}{\usebox\RN@pageI}%
@@ -408,6 +406,8 @@
     \fi
   \fi
 }
+
+\let\twoDigits=\two@digits
 
 \setlength\parindent{0pt}
 \pagestyle{empty}

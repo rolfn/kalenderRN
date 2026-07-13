@@ -68,7 +68,7 @@ The default colors:
 
 ##### Examples
 
-* `\event{\year-10-09}{John Lennon (1940)}`; uncolored every year event 
+* `\event{\calYear-10-09}{John Lennon (1940)}`; uncolored every year event 
 
 * `\event*{2016-03-27}{Ostersonntag}`; event colored with the color defined
 by the key `eventColor` (general holiday)
@@ -85,4 +85,4 @@ special color
 * `\period{2016-09-12}{2016-10-04}[color=red!30,name=Urlaub]`; named period
 colored with a special color
 
-Rolf Niepraschk, 2026-01-27
+Rolf Niepraschk, 2026-07-13

@@ -1,8 +1,7 @@
+% Jährlich wiederkehrende Termine sollten das Makro \calYear enthalten.
+% Yearly events should contain the macro \calYear.
 
-% Jährlich wiederkehrende Termine sollten das Makro \year enthalten.
-% Yearly events should contain the macro \year.
-
-\event{\year-03-14}{Albert Einstein (1879)}
-\event{\year-10-09}{John Lennon (1940)}
+\event{\calYear-03-14}{Albert Einstein (1879)}
+\event{\calYear-10-09}{John Lennon (1940)}
 
 \endinput

@@ -1,4 +1,4 @@
-# Rolf Niepraschk, 2026-02-17, Rolf.Niepraschk@gmx.de
+# Rolf Niepraschk, 2026-07-13, Rolf.Niepraschk@gmx.de
 
 .SUFFIXES : .dtx .ins .tex .ltx .dvi .ps .pdf .eps
 
@@ -10,11 +10,12 @@ VERSION = $(shell awk '/ProvidesClass/ {print $$2}' $(MAIN).cls)
 
 DIST_DIR = $(MAIN)
 ARCHNAME = $(MAIN)-$(VERSION).zip
-EVENTS = Feiertage-2016.events Schulferien-2016.events Urlaub.events \
+EVENTS = Feiertage.events Schulferien-2016.events Urlaub.events \
   Geburtstage.events Sonstiges.events 
 ADD = tikz-kalender-translation.clo
-MAIN_FILES = $(MAIN).cls $(ADD) README.md
+MAIN_FILES = $(MAIN).cls $(ADD) 
 DOC_FILES = \
+  README.md \
   tikz-kalender-example1.pdf \
   tikz-kalender-example2.pdf \
 	tikz-kalender-example3.pdf \
