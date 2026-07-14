@@ -13,9 +13,8 @@ ARCHNAME = $(MAIN)-$(VERSION).zip
 EVENTS = Feiertage.events Schulferien-2016.events Urlaub.events \
   Geburtstage.events Sonstiges.events 
 ADD = tikz-kalender-translation.clo
-MAIN_FILES = $(MAIN).cls $(ADD) 
+MAIN_FILES = $(MAIN).cls $(ADD) README.md
 DOC_FILES = \
-  README.md \
   tikz-kalender-example1.pdf \
   tikz-kalender-example2.pdf \
 	tikz-kalender-example3.pdf \

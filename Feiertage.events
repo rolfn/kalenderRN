@@ -3,8 +3,6 @@
 
 % === Mit Ostern verbundene Feiertage ===
 % === Holidays associated with Easter ===
-% Erfordert \usepackage{easter} im LaTeX-Dokument
-% Requires \usepackage{easter} in the LaTeX document
 
 \selectComputus{gregorian}
 \Easter*[\calYear] 
